@@ -1,0 +1,9 @@
+window.addEventListener('DOMContentLoaded', function() {
+
+  if (/Safari/.test(navigator.userAgent) && !/Chrome|Edg|Edge|OPR|Firefox/.test(navigator.userAgent)) {
+    var img = document.querySelector('.header-container .header-content .block-search .block-content .search-content .actions button.action.search img');
+    if (img) {
+      img.classList.add('safari-fix');
+    } 
+  } 
+});

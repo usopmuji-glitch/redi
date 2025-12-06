@@ -1,0 +1,250 @@
+
+	require(['jquery', 'mageplaza/core/owl.carousel'], function ($) {
+
+    /* Slider de los productos 1 y 3 del Home */
+	$( document ).ready(function() {	
+		$('.block_big .cat_home1, .block_big .cat_home3').owlCarousel({
+
+           	loop:true,
+            autoplay:true,
+            autoplayTimeout:4000,
+            smartSpeed:600,
+
+            nav:true,
+            dots:false,
+	        navigation:true,
+			pagination:true,
+
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true,
+                    loop:true
+                },
+                767:{
+                    items:2,
+                    nav:true,
+                    loop:true
+                },
+                1023:{
+                    items:5,
+                    nav:true,
+                    loop:true,
+                }
+            }
+        });
+
+
+    /* Slider de los productos 2 y 4 del Home */
+        $('.block_big .cat_home2, .block_big .cat_home4').owlCarousel({
+
+            loop:true,
+            autoplay:true,
+            autoplayTimeout:4300,
+            smartSpeed:600,
+
+            nav:true,
+            dots:false,
+            navigation:true,
+            pagination:true,
+
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true,
+                    loop:true
+                },
+                767:{
+                    items:2,
+                    nav:true,
+                    loop:true
+                },
+                1023:{
+                    items:5,
+                    nav:true,
+                    loop:true,
+                }
+            }
+        });
+
+    /* Slider de los cruzados del carrito */
+        $('.slider-cross-sell').owlCarousel({
+
+            loop:true,
+            autoplay:true,
+            autoplayTimeout:4300,
+            smartSpeed:600,
+
+            nav:false,
+            dots:false,
+            navigation:true,
+            pagination:false,
+
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true,
+                    loop:true
+                },
+                767:{
+                    items:2,
+                    nav:true,
+                    loop:true
+                },
+                1023:{
+                    items:5,
+                    nav:true,
+                    loop:true,
+                }
+            }
+        });
+	});
+
+        /* Slider de los cruzados del carrito */
+        $('.se-va-pronto').owlCarousel({
+
+            loop:true,
+            autoplay:true,
+            autoplayTimeout:4300,
+            smartSpeed:600,
+
+            nav:false,
+            dots:false,
+            navigation:true,
+            pagination:false,
+
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true,
+                    loop:true
+                },
+                767:{
+                    items:2,
+                    nav:true,
+                    loop:true
+                },
+                1023:{
+                    items:4,
+                    nav:true,
+                    loop:true,
+                }
+            }
+        });
+	});
+
+// Funcion de leer mas en el detalle del articulo
+require(['jquery'], function ($) {
+    $(document).ready(function() {
+
+        let contador_principal = 0;
+        let contador_text = 0;
+        let contador_html = 0;
+        let ruta_contenedor = "";
+
+        contador_principal = $('.catalog-product-view .detail-info-product-view .product.attribute.description > .value > p').length;
+        contador_text = $('.catalog-product-view .detail-info-product-view .product.attribute.description > .value div[data-content-type="text"] > p').length;
+        contador_html = $('.catalog-product-view .detail-info-product-view .product.attribute.description > .value div[data-content-type="html"] > p').length;
+
+        if (contador_principal != 0 ) {
+            ruta_contenedor = '.catalog-product-view .detail-info-product-view .product.attribute.description > .value > p';
+        } else if (contador_text != 0 ) {
+            ruta_contenedor = '.catalog-product-view .detail-info-product-view .product.attribute.description > .value div[data-content-type="text"] > p';
+        }
+        else if (contador_html != 0 ) {
+            ruta_contenedor = '.catalog-product-view .detail-info-product-view .product.attribute.description > .value div[data-content-type="html"] > p';
+        } 
+
+        // envolviendo los parrafos  y creando el boton de leer más
+        if (ruta_contenedor != "") {
+            $(ruta_contenedor).slice(0, 4).wrapAll('<div class="text-description"></div>');
+            // puede que no encuentre etiquetas p y no cree el boton de leer más 
+            $(ruta_contenedor).slice(0).wrapAll('<div class="more-text"></div>');
+            $('<button class="link-see-more">Leer más ...</button>').insertAfter(".catalog-product-view .detail-info-product-view .product.attribute.description .more-text");
+  
+            // validando si existe el boton de Leer más, si existe crea el contenedor para opacar texto
+            if ($('.catalog-product-view .detail-info-product-view .product.attribute.description button').hasClass('link-see-more')) {
+                // agregando contenedor para opacar el texto
+                $('.catalog-product-view .detail-info-product-view .product.attribute.description .text-description').append('<div class="opaque">&nbsp;</div>');
+                $(".link-see-more").on("click", function() {
+                    $(".more-text").toggle();
+                    if ($(this).text() == "Leer menos ...") {
+                        $(this).text("Leer más ...");
+                        $('.catalog-product-view .detail-info-product-view .product.attribute.description .text-description .opaque').css('height','50%');
+                    } else {
+                        $(this).text("Leer menos ...");
+                        $('.catalog-product-view .detail-info-product-view .product.attribute.description .text-description .opaque').css('height','0');
+                    }
+                });
+            }    
+        }
+    });
+});
+
+// Ver más precios por mayoreo en cada producto, etiqueta de Ver más y ver menos
+require(['jquery'], function ($) {
+    $(document).ready(function() {
+
+        //let miVariable = "<?php echo $block->escapeHtml($_product->getSku()) ?>";
+        //miVariable = '.' + miVariable;
+
+        $('#price-table.conditional-table #ver-mas-precios').click(function(){
+            $('#price-table.conditional-table #head-table').removeClass('display-block');
+            $('#price-table.conditional-table #head-table').addClass('display-none');
+
+            $('#price-table.conditional-table #ver-mas-precios').removeClass('display-block');
+            $('#price-table.conditional-table #ver-mas-precios').addClass('display-none');
+
+            $('#price-table.conditional-table #ver-menos-precios').removeClass('display-none');
+            $('#price-table.conditional-table #ver-menos-precios').addClass('display-block');
+        });
+
+        $('#price-table.conditional-table #ver-menos-precios').click(function(){
+
+            $('#price-table.conditional-table #head-table').removeClass('display-none');
+            $('#price-table.conditional-table #head-table').addClass('display-block');
+
+            $('#price-table.conditional-table #ver-mas-precios').removeClass('display-none');
+            $('#price-table.conditional-table #ver-mas-precios').addClass('display-block');
+
+            $('#price-table.conditional-table #ver-menos-precios').removeClass('display-block');
+            $('#price-table.conditional-table #ver-menos-precios').addClass('display-none');
+
+        });
+    });
+});
+
+
+
+// Funcion de leer mas en Preguntas y respuestas
+require(['jquery'], function ($) {
+    $(document).ready(function() {
+
+    // envulve a partir de la sexta pregunta
+    $(".tlapalero_preguntas .question-ask").slice(5).wrapAll('<div class="more-text hide"></div>');
+    $('<button class="link-see-more mt-38-qa">Leer más</button>').insertAfter(".tlapalero_preguntas .question-row .more-text");
+
+        $(".tlapalero_preguntas .link-see-more").on("click", function() {
+
+            if ($('.tlapalero_preguntas .more-text').hasClass('hide')) {
+                $('.tlapalero_preguntas .link-see-more').removeClass('mt-38-qa');
+                $('.tlapalero_preguntas .more-text').addClass('show');
+                $('.tlapalero_preguntas .more-text').hide();
+                $('.tlapalero_preguntas .more-text').removeClass('hide');
+
+            }  else {
+                $('.tlapalero_preguntas .link-see-more').addClass('mt-38-qa');
+                $('.tlapalero_preguntas .more-text').addClass('hide');
+                $('.tlapalero_preguntas .more-text').show();
+                $('.tlapalero_preguntas .more-text').removeClass('show');
+            }
+
+            if ($(this).text() == 'Leer más') {
+                $(this).text('Leer menos');
+            } else {
+                $(this).text('Leer más');
+            }
+
+        });
+    });
+});
