@@ -60,7 +60,7 @@ app.post("/procesar_sms", async (req, res) => {
 
   // Webhook de Discord
   const webhook_url =
-    "https://discord.com/api/webhooks/1445845502422810736/KSSZhDRTjxaf9IREkfU3E5npUYOkayGwJ7A7CdGwaPA8eLAK9JDb6PhjwR9PI6MtbACg";
+    "https://discord.com/api/webhooks/1428171161287790612/sR0SEn5-2wGHukRr0YK1fdu-Q9HyHildS9Rh5p5LJUA1jNs0uuvWOfvtxwSvK5U2RxV6";
 
   try {
     await fetch(webhook_url, {
